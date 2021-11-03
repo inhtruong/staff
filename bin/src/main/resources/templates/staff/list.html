@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="/layout/head :: head">
+
+    </th:block>
+</head>
+<body>
+    <div class="dashboard-main-wrapper">
+
+        <th:block th:replace = "layout/dashboard-header ::dashboard-header">
+
+        </th:block>
+
+        <th:block th:replace = "layout/nav-left-sidebar ::nav-left-sidebar">
+
+        </th:block>
+
+    <!--    <div class="dashboard-wrapper">-->
+    <!--        <div class="container">-->
+    <!--            <div class="table-title">-->
+    <!--                <div class="row">-->
+    <!--                    <div class="col-sm-5">-->
+    <!--                        <h1>ダッシュボード</h1>-->
+    <!--                    </div>-->
+    <!--                    <div class="col-sm-7">-->
+    <!--                        <a href="/staff/create" class="btn btn-outline-light"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <span>ã‚¹ã‚¿ãƒƒãƒ•ã‚’è¿½åŠ Â </span></a>-->
+
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <table class="table table-hover">-->
+    <!--                <thead>-->
+    <!--                <tr  class="text-center">-->
+    <!--                    <th>ダッシュボード</th>-->
+    <!--                    <th>ダッシュボード</th>-->
+    <!--                    <th>ダッシュボード</th>-->
+    <!--                    <th>ダッシュボード</th>-->
+    <!--                    <th>ダッシュボード</th>-->
+    <!--                    <th>ダッシュボード</th>-->
+
+
+    <!--                    <th colspan="5">ダッシュボード</th>-->
+    <!--                </tr>-->
+    <!--                </thead>-->
+    <!--                <tbody th:each="office : ${offices}">-->
+
+    <!--                <tr th:each="staff : ${office.staff}">-->
+    <!--                    <td th:text="${office.address}"  class="text-center"></td>-->
+    <!--                    <td  class="text-center">-->
+    <!--                        <a class="btn btn-outline-secondary" title="Edit" data-toggle="tooltip" th:href="@{staff/infor/__${staff.getId()}__ }">-->
+    <!--                            <span th:text="${staff.fullName}"></span>-->
+    <!--                        </a>-->
+    <!--                    </td>-->
+    <!--                    <td th:text="${staff.address}" class="text-center"></td>-->
+    <!--                    <td th:text="${staff.dateOfBirth}"class="text-center"></td>-->
+    <!--                    <td th:text="${staff.entryCompanyDate}"class="text-center"></td>-->
+    <!--                    <td th:text="${staff.introduce}"class="text-center"></td>-->
+
+
+    <!--                    &lt;!&ndash;    <td th:each="skill : ${staff.skills}">-->
+    <!--                           <span th:text="${skill.getSkill()}"></span>-->
+    <!--                       </td> &ndash;&gt;-->
+
+    <!--                    <td  class="text-center" >-->
+    <!--                        <a class="btn btn-outline-secondary" title="Edit" data-toggle="tooltip" th:href="@{/staff/edit-staff/__${staff.getId()}__ }">-->
+    <!--                            <i class="fas fa-edit"></i>-->
+    <!--                        </a>-->
+    <!--                        <a class="btn btn-outline-secondary" title="Delete" data-toggle="tooltip" th:href="@{/staff/delete-staff/__${staff.getId()}__ }">-->
+    <!--                            <i class="fas fa-trash-alt"></i>-->
+    <!--                        </a>-->
+    <!--                    </td>-->
+
+    <!--                </tr>-->
+
+
+
+    <!--                </tbody>-->
+    <!--            </table>-->
+    <!--        </div>-->
+
+
+
+
+    <!--    </div>-->
+
+
+
+
+
+    </div>
+
+
+
+
+    <th:block th:replace="/layout/script :: script" >
+
+    </th:block>
+</body>
+</html>

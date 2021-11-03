@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="/layout/head :: head">
+
+    </th:block>
+</head>
+<body>
+    <div class="dashboard-main-wrapper">
+
+        <th:block th:replace = "layout/dashboard-header ::dashboard-header">
+
+        </th:block>
+
+        <th:block th:replace = "layout/nav-left-sidebar ::nav-left-sidebar">
+
+        </th:block>
+
+        <input type="text" id="currentRow" th:value="${mess}" style="display: none">
+      <div class="dashboard-wrapper">
+          
+           <div class="container-fluid dashboard-content">
+           		 <div class="row">
+                        <!-- ============================================================== -->
+                        <!-- basic table -->
+                        <!-- ============================================================== -->
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                	<div class="row">
+	                                	<div class="col-sm-5">
+				                           <h3 class="">ãƒ€ãƒƒã‚·ãƒ¥ãƒœãƒ¼ãƒ‰</h3>
+				                       </div>
+				                       <div class="col-sm-7">
+				                       	<p class="text-right">
+				                       		<a href="/staff/create" class="btn btn-primary"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <span>ã‚¹ã‚¿ãƒƒãƒ•ã‚’è¿½åŠ </span></a>
+				                       	</p>
+				                       </div>
+	                                </div>
+			                    </div>
+                                <div class="card-body">
+                                    <table id="staffList" class="table table-hover">
+						                   <thead>
+						                   <tr  class="text-center">
+						                       <th>æ”¯åº—</th>
+						                       <th>å��å‰�</th>
+						                       <th>ç”Ÿå¹´æœˆæ—¥</th>
+						                       <th>å…¥ç¤¾æ—¥</th>
+						                       <th>ãƒ¡ãƒ¼ãƒ«</th>
+						                   
+						                       <th colspan="5">ã‚¢ã‚¯ã‚·ãƒ§ãƒ³</th>
+						                   </tr>
+						                   </thead>
+						                   <tbody>
+						
+                                               <tr th:id="'staff_'+${staff.id}" th:each="staff : ${staffs}">
+                                                   <td th:text="${staff.office}"  class="text-center"></td>
+                                                   <td  class="text-center">
+                                                       <a th:href="@{/staff/info/__${staff.getId()}__ }" th:text="${staff.fullName}"></a>
+                                                   </td>
+                                                   <td th:text="${staff.getDateOfBirth()}"  class="text-center"></td>
+                                                   <td th:text="${staff.getEntryCompanyDate()}"  class="text-center"></td>
+
+                                                   <td th:text="${staff.getEmail()}"  class="text-center"></td>
+
+                                                   <td  class="text-center" >
+                                                       <a class="btn btn-outline-secondary" title="Edit" data-toggle="tooltip" th:href="@{/staff/edit-staff/__${staff.getId()}__ }">
+                                                           <i class="fas fa-edit"></i>
+                                                       </a>
+                                                       <a class="btn btn-outline-secondary delete" data-toggle="tooltip" th:data-id="${staff.getId()}">
+                                                           <i class="fas fa-trash-alt" aria-hidden="true"></i>
+                                                       </a>
+                                                   </td>
+                                               </tr>
+						                   </tbody>
+						               </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ============================================================== -->
+                        <!-- end basic table -->
+                        <!-- ============================================================== -->
+                        
+                    </div>
+           </div>
+       </div>
+    </div>
+    <!-- setLock Modal HTML -->
+    <div id="setLock" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h4 class="modal-title">Set Lock Account</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure?</p>
+                        <p class="text-warning"><small>This action cannot be undone.</small></p>
+                    </div>
+                    <input type="text" id="id" name="id" style="display: none">
+                </form>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <input type="button" name="setLock" id="btnSetLock" class="btn btn-danger" value="Set Lock">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <th:block th:replace="/layout/script :: script" >
+
+    </th:block>
+    <script>
+        class App {
+            static showAlert(icon, title) {
+                Swal.fire({
+                    icon: icon,
+                    title: title,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            }
+        }
+        $(document).ready(function () {
+            let mess = $("#currentRow").val();
+            if (mess != null && mess != ''){
+                $("#currentRow").val('');
+                if (mess == "Success !"){
+                    App.showAlert("success", mess)
+                }else{
+                    App.showAlert("danger", mess)
+                }
+            }
+        })
+        //onclick setLock
+        $("#staffList").on("click", ".delete", function () {
+            let id = $(this).data('id');
+            $("#id").val(id);
+            $('#setLock').modal('show');
+        });
+
+        function setLock() {
+            let id = $("#id").val();
+            $.ajax({
+                type: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: location.origin+"/setLock/" + id,
+
+            }).done((data) =>{
+                $("#staff_"+data).remove();
+                $("#setLock").modal("hide");
+                App.showAlert("success","success");
+            }).fail((jqXHR) => {
+                App.showAlert("error", "Something is wrong !");
+            });
+        }
+
+                //onclick setLock account
+        $("#btnSetLock").on("click", function () {
+            setLock();
+        })
+    </script>
+</body>
+</html>
